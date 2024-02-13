@@ -1,0 +1,11 @@
+-in:file:s hNSP4_14mer_align.pdb
+-nstruct 10
+-in:file:fullatom
+-write_all_connect_info
+-parser:protocol MutateAF_Fix.xml
+-jd2:failed_job_exception false
+-mute protocols.generalized_kinematic_closure.filter.GeneralizedKICfilter core.chemical.AtomICoor core.conformation.Residue
+-out:pdb
+-out:file:scorefile score_
+-out:prefix MutAF_
+-overwrite

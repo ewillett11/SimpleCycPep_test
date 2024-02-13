@@ -1,0 +1,44 @@
+<ROSETTASCRIPTS>
+	<SCOREFXNS>
+		<ScoreFunction name="ref15sfxn" weights="ref2015.wts" />
+        <ScoreFunction name="fullatom" weights="ref2015_cart.wts" symmetric="0">
+           <Reweight scoretype="atom_pair_constraint" weight="0.5"/>
+        </ScoreFunction>
+	</SCOREFXNS>
+    <RESIDUE_SELECTORS>
+        <Index name="select_cterm" resnums="13" />
+        <Index name="residue" resnums="2" />
+    </RESIDUE_SELECTORS>
+	<TASKOPERATIONS>
+        <RestrictToRepacking name="rtrp"/>
+	</TASKOPERATIONS>
+	<FILTERS>
+	</FILTERS>
+	<MOVERS>
+        
+        <MutateResidue name="mutate_2" residue_selector="residue2" new_res="ASP" preserve_atom_coords="true" mutate_self="false" />
+        
+        <PeptideStubMover name="add_loop_residues" >
+            <Insert anchor_rsd="14" resname="GLY" />
+		</PeptideStubMover>
+        
+        <ModifyVariantType name="vartype" add_type="CTERM_AMIDATION" residue_selector="select_cterm" />
+        
+        <DeclareBond name="new_bond" atom1="CP" atom2="SG" res1="1" res2="12" add_termini="true" />
+        
+        <RotamerTrialsMinMover name="rotmin" scorefxn="ref15sfxn" task_operations="rtrp" />
+        
+        <FastRelax name="relax" scorefxn="fullatom" task_operations="rtrp" relaxscript="default" cartesian= "true" bondangle="true" bondlength="true" >
+        </FastRelax> 
+        
+	</MOVERS>
+	<APPLY_TO_POSE>
+	</APPLY_TO_POSE>
+	<PROTOCOLS>
+        <Add mover="mutate_3" />
+        <Add mover="vartype" />
+        <Add mover="rotmin" />
+        <Add mover="relax" />
+	</PROTOCOLS>
+	<OUTPUT />
+</ROSETTASCRIPTS>

@@ -1,0 +1,6 @@
+-in:file:s Mutate_MCnative_CBLcombined.pdb
+-nstruct 10
+-in:file:fullatom
+-parser:protocol Mutating_MC_docking.xml
+-out:file:scorefile score_MutDock_native
+-overwrite

@@ -1,0 +1,39 @@
+<ROSETTASCRIPTS>
+	<SCOREFXNS>
+		<ScoreFunction name="ref15sfxn" weights="ref2015.wts" />
+        <ScoreFunction name="fullatom" weights="ref2015_cart.wts" symmetric="0">
+           <Reweight scoretype="atom_pair_constraint" weight="0.5"/>
+        </ScoreFunction>
+	</SCOREFXNS>
+    <RESIDUE_SELECTORS>
+    </RESIDUE_SELECTORS>
+	<TASKOPERATIONS>
+        <RestrictResidueToRepacking name="restrict_F1" resnum="1"/>
+        <RestrictResidueToRepacking name="restrict_C13" resnum="13"/>
+        <RestrictToRepacking name="rtrp"/>
+        <RestrictChainToRepacking name="restrict_chain" chain="1"/>
+	</TASKOPERATIONS>
+	<FILTERS>
+	</FILTERS>
+	<MOVERS>
+        
+        <PackRotamersMover name="pack" nloop="2000" scorefxn="ref15sfxn" task_operations= "restrict_F1,restrict_C13"/>
+        
+        <RandomMutation name="mutate" scorefxn="ref15sfxn"/>
+        
+        <DeclareBond name="new_bond" atom1="CP2" atom2="SG" res1="1" res2="13" />
+        
+        <RotamerTrialsMinMover name="rotmin" scorefxn="ref15sfxn" task_operations= "rtrp" />
+        
+        <FastRelax name="relax" scorefxn="fullatom" relaxscript="default" cartesian= "true" bondangle="true" bondlength="true" task_operations= "rtrp">
+        </FastRelax> 
+        
+	</MOVERS>
+	<APPLY_TO_POSE>
+	</APPLY_TO_POSE>
+	<PROTOCOLS>
+        <Add mover="rotmin" />
+        <Add mover="relax" />
+	</PROTOCOLS>
+	<OUTPUT />
+</ROSETTASCRIPTS>

@@ -1,0 +1,62 @@
+<ROSETTASCRIPTS>
+	<SCOREFXNS>
+		<ScoreFunction name="ref15sfxn" weights="ref2015.wts" />
+        <ScoreFunction name="fullatom" weights="ref2015_cart.wts" symmetric="0">
+        </ScoreFunction>
+	</SCOREFXNS>
+    <RESIDUE_SELECTORS>
+        <Index name="select_cterm" resnums="14" />
+        <Index name="residue2" resnums="2" />
+        <Index name="residue3" resnums="3" />
+        <Index name="residue4" resnums="4" />
+        <Index name="residue5" resnums="5" />
+        <Index name="residue6" resnums="6" />
+        <Index name="residue7" resnums="7" />
+        <Index name="residue8" resnums="8" />
+        <Index name="residue9" resnums="9" />
+        <Index name="residue10" resnums="10" />
+        <Index name="residue11" resnums="11" />
+        <Index name="residue12" resnums="12" />
+        <Index name="residue13" resnums="13" />
+    </RESIDUE_SELECTORS>
+	<TASKOPERATIONS>
+        <RestrictToRepacking name="rtrp"/>
+	</TASKOPERATIONS>
+	<FILTERS>
+	</FILTERS>
+	<MOVERS>
+        <MutateResidue name="mutate_2" residue_selector="residue2" new_res="ASP" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_3" residue_selector="residue3" new_res="ALA" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_4" residue_selector="residue4" new_res="THR" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_5" residue_selector="residue5" new_res="ARG" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_6" residue_selector="residue6" new_res="GLU" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_7" residue_selector="residue7" new_res="ARG" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_8" residue_selector="residue8" new_res="GLN" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_9" residue_selector="residue9" new_res="ILE" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_10" residue_selector="residue10" new_res="ILE" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_11" residue_selector="residue11" new_res="PRO" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_12" residue_selector="residue12" new_res="PHE" preserve_atom_coords="true" mutate_self="false" />
+        <MutateResidue name="mutate_13" residue_selector="residue13" new_res="LEU" preserve_atom_coords="true" mutate_self="false" />
+        <ModifyVariantType name="vartype" add_type="CTERM_AMIDATION" residue_selector="select_cterm" />
+        <DeclareBond name="new_bond" atom1="CP" atom2="SG" res1="1" res2="12" add_termini="true" />
+        <RotamerTrialsMinMover name="rotmin" scorefxn="ref15sfxn" task_operations="rtrp" />
+        <FastRelax name="relax" scorefxn="fullatom" task_operations="rtrp" relaxscript="default" cartesian= "true" bondangle="true" bondlength="true" >
+        </FastRelax> 
+	</MOVERS>
+	<PROTOCOLS>
+        <Add mover="mutate_2" />
+        <Add mover="mutate_3" />
+        <Add mover="mutate_4" />
+        <Add mover="mutate_5" />
+        <Add mover="mutate_6" />
+        <Add mover="mutate_7" />
+        <Add mover="mutate_8" />
+        <Add mover="mutate_9" />
+        <Add mover="mutate_10" />
+        <Add mover="mutate_11" />
+        <Add mover="mutate_12" />
+        <Add mover="mutate_13" />
+        <Add mover="rotmin" />
+        <Add mover="relax" />
+	</PROTOCOLS>
+</ROSETTASCRIPTS>
